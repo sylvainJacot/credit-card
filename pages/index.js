@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Form from "../src/components/Form/Form";
 import GridHelper from "../src/components/Layout/Grid/GridHelper";
 
 export default function Home() {
@@ -10,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GridHelper />
-      Hello Credit Card
+      <Form />
     </>
   );
 }
