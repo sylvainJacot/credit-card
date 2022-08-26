@@ -1,18 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Form() {
   const [creditCardState, setCreditCardState] = useState({
-    CardNumber: "",
+    CardNumber: "################",
     CardOwner: "",
     CardDate: "",
   });
 
+  String.prototype.replaceAt = function (index, replacement) {
+    return (
+      this.substring(0, index) +
+      replacement +
+      this.substring(index + replacement.length)
+    );
+  };
+
   const valueChangeHandler = (e) => {
     switch (e.target.id) {
       case "cardNumber":
+        const cardNumber = creditCardState.CardNumber;
+
+        const userInput = e.target.value;
+
+        const userInputItemsFirst = userInput.charAt(0);
+        const cardNumberItemsFirst = cardNumber.charAt(0);
+
+        cardNumberItemsFirst = userInputItemsFirst;
+
+        const updatedCardnumber = cardNumber.replaceAt(0, userInputItemsFirst);
+
         return setCreditCardState({
           ...creditCardState,
-          CardNumber: e.target.value,
+          CardNumber: updatedCardnumber,
         });
 
       case "cardOwner":
@@ -42,7 +61,6 @@ export default function Form() {
           type="tel"
           autoComplete="off"
           required
-          value={creditCardState.CardNumber}
           onChange={valueChangeHandler}
         />
         <input
@@ -55,7 +73,7 @@ export default function Form() {
         />
         <input
           id="cardDate"
-          type="text"
+          type="date"
           autoComplete="off"
           required
           value={creditCardState.CardDate}
