@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import CreditCard from "../CreditCard/CreditCard";
 
 export default function Form() {
   const [creditCardState, setCreditCardState] = useState({
@@ -6,6 +7,9 @@ export default function Form() {
     CardOwner: "",
     CardDate: "",
   });
+
+  // Default state Card Number
+  const cardNumber = creditCardState.CardNumber;
 
   String.prototype.replaceAt = function (index, replacement) {
     return (
@@ -15,12 +19,25 @@ export default function Form() {
     );
   };
 
+  function space(el, after) {
+    // defaults to a space after 4 characters:
+    after = after || 4;
+
+    /* removes all characters in the value that aren't a number,
+       or in the range from A to Z (uppercase): */
+    var v = el.value.replace(/[^\dA-Z]/g, ""),
+      /* creating the regular expression, to allow for the 'after' variable
+       to be used/changed: */
+      reg = new RegExp(".{" + after + "}", "g");
+    el.value = v.replace(reg, function (a, b, c) {
+      return a + " ";
+    });
+  }
+
   const valueChangeHandler = (e) => {
+    e.preventDefault();
     switch (e.target.id) {
       case "cardNumber":
-        // Default state Card Number
-        const cardNumber = creditCardState.CardNumber;
-
         // Get User Input
         const userInput = e.target.value;
 
@@ -56,11 +73,11 @@ export default function Form() {
 
   return (
     <>
-      <div>
-        Number : {creditCardState.CardNumber}
-        Owner : {creditCardState.CardOwner}
-        Date : {creditCardState.CardDate}
-      </div>
+      <CreditCard
+        CardNumber={creditCardState.CardNumber}
+        CardOwner={creditCardState.CardOwner}
+        CardDate={creditCardState.CardDate}
+      />
       <form>
         <input
           id="cardNumber"
