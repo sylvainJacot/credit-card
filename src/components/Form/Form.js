@@ -18,21 +18,27 @@ export default function Form() {
   const valueChangeHandler = (e) => {
     switch (e.target.id) {
       case "cardNumber":
+        // Default state Card Number
         const cardNumber = creditCardState.CardNumber;
 
+        // Get User Input
         const userInput = e.target.value;
 
-        const userInputItemsFirst = userInput.charAt(0);
-        const cardNumberItemsFirst = cardNumber.charAt(0);
+        // Get seperated values of User input
+        const userInputItems = userInput.split("");
 
-        cardNumberItemsFirst = userInputItemsFirst;
+        // Replace respective card numbers by user input values
+        userInputItems.forEach((letter, index) => {
+          const cardNumberUpdate = cardNumber.replaceAt(index, letter);
 
-        const updatedCardnumber = cardNumber.replaceAt(0, userInputItemsFirst);
-
-        return setCreditCardState({
-          ...creditCardState,
-          CardNumber: updatedCardnumber,
+          // Update card Number
+          return setCreditCardState({
+            ...creditCardState,
+            CardNumber: cardNumberUpdate,
+          });
         });
+
+        return creditCardState.CardNumber;
 
       case "cardOwner":
         return setCreditCardState({
@@ -60,6 +66,7 @@ export default function Form() {
           id="cardNumber"
           type="tel"
           autoComplete="off"
+          maxLength={16}
           required
           onChange={valueChangeHandler}
         />
