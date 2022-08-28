@@ -4,8 +4,8 @@ import CreditCard from "../CreditCard/CreditCard";
 export default function Form() {
   const [creditCardState, setCreditCardState] = useState({
     CardNumber: "################",
-    CardOwner: "",
-    CardDate: "",
+    CardOwner: "Owner",
+    CardDate: "Date",
   });
 
   // Default state Card Number
